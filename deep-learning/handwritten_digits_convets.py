@@ -1,21 +1,16 @@
 '''
 
-runtime accurracy: 99.19%
+runtime accurracy: 98.98%
 runtime output:
 
-Epoch 1/5
-60000/60000 [==============================] - 34s 572us/step - loss: 0.2348 - acc: 0.9276
-Epoch 2/5
-60000/60000 [==============================] - 33s 553us/step - loss: 0.0552 - acc: 0.9828
-Epoch 3/5
-60000/60000 [==============================] - 32s 537us/step - loss: 0.0380 - acc: 0.9881
-Epoch 4/5
-60000/60000 [==============================] - 33s 552us/step - loss: 0.0273 - acc: 0.9912
-Epoch 5/5
-60000/60000 [==============================] - 33s 554us/step - loss: 0.0219 - acc: 0.9929
+Epoch 1/3
+60000/60000 [==============================] - 34s 564us/step - loss: 0.2278 - acc: 0.9273
+Epoch 2/3
+60000/60000 [==============================] - 33s 557us/step - loss: 0.0552 - acc: 0.9830
+Epoch 3/3
+60000/60000 [==============================] - 34s 562us/step - loss: 0.0373 - acc: 0.9880
 10000/10000 [==============================] - 2s 240us/step
-test_acc 0.9919
-
+test_acc 0.9898
 '''
 from keras.datasets import mnist
 import numpy as np
@@ -46,7 +41,7 @@ from keras.utils import to_categorical
 train_labels = to_categorical(train_labels)
 test_labels = to_categorical(test_labels)  
 
-network.fit(train_images,train_labels,epochs= 5,batch_size = 128)
+network.fit(train_images,train_labels,epochs= 3,batch_size = 128)
 
 test_loss, test_acc = network.evaluate(test_images, test_labels)
 print('test_acc', test_acc)
