@@ -19,12 +19,12 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-@app.route('/', methods=["POST"])
+@app.route('/')
 
 def home():
     return render_template('layout.html')
 
-@app.route('/pred')
+@app.route('/pred',methods=["POST"])
 def pred():
         message = request.json["image"]
         decoded = base64.b64decode(message)
