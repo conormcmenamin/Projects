@@ -1,0 +1,16 @@
+{% block body %}
+  <div align = "center" class ="video-wrap">
+    <video id ='video' playsinline autoplay></video>
+  </div>
+
+  <div align = center class ='controller'>
+    <button id='snap' class="btn btn-light">Capture</button>
+    <a href = "https://127.0.0.1:5000/prediction" ><button class="btn btn-primary">Predict</button></a>
+  </div>
+
+  <div align = center>
+    <canvas  id = 'canvas' width = "320" height="240"></canvas>
+    <p id = spanErrorMsg></p>
+    <p id = "verdict"></p>
+  </div>
+{% endblock %}

@@ -1,0 +1,74 @@
+
+<html>
+
+  <head>
+
+    <meta charset="UTF-8">
+
+    <title>SentiClass! Free emotion detector</title>
+    <link rel="icon" type="image/png" href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/apple/198/face-with-stuck-out-tongue-and-winking-eye_1f61c.png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  </head>
+
+  <body>
+    {% include 'includes/home.html'%}
+    {%include 'includes/video.html'%}
+
+
+
+    <div class="container">
+      {% block body %} {% endblock%}
+    </div>
+  <script>
+  'use strict';
+  const video = document.getElementById('video');
+  const canvas = document.getElementById('canvas');
+  const snap = document.getElementById('snap');
+  const errMsgElement = document.getElementById('spanErrorMsg');
+  const constraints ={
+    audio: false,
+    video:{
+      width: 280, height: 280
+    }
+  };
+  async function init(){
+    try{
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+      handleSuccess(stream);
+    }
+    catch(e){
+      errMsgElement.innerHTML= 'getUserMedia() error' + e.toString();
+    }
+  }
+  function handleSuccess(stream)
+  {
+    window.stream =stream;
+    video.srcObject = stream;
+  }
+  init();
+  var context = canvas.getContext('2d');
+  snap.addEventListener('click',function(){
+    context.drawImage(video,0,0,320,240);
+    base64Image = canvas.toDataURL();
+    base64Image=base64Image.replace("data:image/png;base64,","");
+    console.log(base64Image);
+  });
+  let base64Image;
+  $('#predict').click(function(){
+      base64Image = canvas.toDataURL();
+      if(base64Image == ""){
+        alert("You must capture a picture before making a prediction")
+      }
+      base64Image=base64Image.replace("data:image/png;base64,","");
+      console.log(base64Image);
+      var message = {
+        image: base64Image
+      };
+      $.post('http://127.0.0.1:5000/pred', JSON.stringify(message), function(response){
+        $('verdict').text("You are feeling " + response.verdict);
+      });
+  });
+  </script>
+  </body>
+</html>
