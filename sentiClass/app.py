@@ -38,7 +38,7 @@ def pred():
         j = [ind for ind, val in enumerate(prediction) if val==m]
 
         response={
-            'prediction': CATEGORIES[j]
+            'verdict': CATEGORIES[j]
         }
 
         return jsonify(response)
